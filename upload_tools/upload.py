@@ -17,10 +17,10 @@ SERVER_OTHER_ERROR = 3            # 服务端有错误,不执行上传
 # 用于设置相关信息的config项
 config_items = {
     "resID": "login",
-    "resVersion": "20160704",
+    "resVersion": "20160702",
     "appID": "kaola",
     "domain": "www.baidu.com,www.163.com",
-    "zipPath": "/Users/hzhehui/workspace/web-cache/NEYouFan/ht-candywebcache-demo-server/test_packages/login_20160704.zip"
+    "zipPath": "/Users/hzhehui/workspace/web-cache/NEYouFan/ht-candywebcache-demo-server/test_packages/login_20160702.zip"
 }
 #################### 配置项
 
@@ -116,6 +116,7 @@ def create_version_info(version_item, old_file):
     try:
         # 文件拷贝
         copy_cmd = "cp " + base_version_info["zipPath"] + " " + base_version_info["fileServerPath"] + "/packages/"
+        full_zip_md5 = create_md5(base_version_info["zipPath"])
         if os.system(copy_cmd) != 0:
             return False
 
@@ -143,7 +144,7 @@ def create_version_info(version_item, old_file):
         version_item["resVersion"] = base_version_info["resVersion"]
 
         version_item["fullUrl"] = base_version_info["root_url"] + package_name
-        version_item["fullMd5"] = create_md5(version_item["fullUrl"])
+        version_item["fullMd5"] = full_zip_md5
 
     except Exception as e:
         print("create_version_info: " + str(e))
