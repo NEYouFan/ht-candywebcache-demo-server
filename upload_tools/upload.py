@@ -17,10 +17,10 @@ SERVER_OTHER_ERROR = 3            # 服务端有错误,不执行上传
 # 用于设置相关信息的config项
 config_items = {
     "resID": "login",
-    "resVersion": "20160702",
+    "resVersion": "20160704",
     "appID": "kaola",
     "domain": "www.baidu.com,www.163.com",
-    "zipPath": "/Users/hzhehui/workspace/web-cache/test/login_20160702.zip"
+    "zipPath": "/Users/hzhehui/workspace/web-cache/NEYouFan/ht-candywebcache-demo-server/test_packages/login_20160704.zip"
 }
 #################### 配置项
 
