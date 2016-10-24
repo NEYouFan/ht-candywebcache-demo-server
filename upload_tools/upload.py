@@ -104,7 +104,6 @@ def create_md5(diff_file_name):
     output_value = base64.b64encode(desedData)
 
     retStr = str(output_value, encoding="utf-8")
-    print("output_value = " + str(retStr))
 
     return retStr
 
