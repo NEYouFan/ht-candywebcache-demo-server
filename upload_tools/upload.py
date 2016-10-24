@@ -6,7 +6,7 @@ import json
 import os
 import hashlib
 import base64
-from Crypto.Cipher import DES
+import pyDes
 
 SERVER_IS_LATEST = 0              # 服务端已经是最新的
 SERVER_NEED_UPLOAD = 1            # 服务端有这个资源,但是版本较旧,可以更新
@@ -75,19 +75,37 @@ def upload_package_file(old_file):
 
     return
 
+def des_encrypt(data_src):
+    des = pyDes.des("12344321", pyDes.ECB, padmode=pyDes.PAD_PKCS5)
+    encrypt_data = des.encrypt(data_src)
+    return encrypt_data
+
+def cal_md5(diff_file_name):
+    md5 = hashlib.md5()
+    diff_file = open(diff_file_name, 'rb')
+    while True:
+        data = diff_file.read(8192)
+        if not data:
+            break
+
+        md5.update(data)
+    md5_value = md5.hexdigest()
+    return md5_value
+
 def create_md5(diff_file_name):
     """
         加密处理的
         :param diff_file_name:
         :return:
         """
-    
-    md5_value = hashlib.md5(diff_file_name.encode()).hexdigest()
-    des_obj = DES.new("12344321")
-    output_value = base64.b64encode(des_obj.encrypt(md5_value))
-    
-    
-    return str(output_value, encoding="utf-8")
+    md5_value = cal_md5(diff_file_name)
+
+    desedData = des_encrypt(md5_value)
+    output_value = base64.b64encode(desedData)
+
+    retStr = str(output_value, encoding="utf-8")
+
+    return retStr
 
 
 def create_version_info(version_item, old_file):
